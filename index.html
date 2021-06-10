@@ -11,31 +11,64 @@
       integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
       crossorigin="anonymous"
     />
-    <link />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap"
+      rel="stylesheet"
+    />
+
+    <link href="assets/css/style.css" rel="stylesheet" />
   </head>
   <body>
-    <div class="container">
-      <div class="row">
-        <!--column 1 -->
-        <div class="col">
-          <input
-            name="search-query"
-            id="username"
-            type="text"
-            autofocus="true"
-            class="form-input"
-          />
-          <button id="button" type="submit" class="btn">Click Me</button>
-        
+    <header class="fs-1">Super Cool Weather APP</header>
+    <!--Main Container-->
+    <main class="container-fluid row">
+      <!--User Search-->
+      <aside id="search-card" class="col-2 my-2">
+        <p class="fs-4">Search by city</p>
+        <input type="text" />
+        <button id="searchBtn">Search</button>
+        <!--Recent Searches-->
+        <div id="display-recent-search"></div>
+      </aside>
 
-        <!--City -->
-        <div class="col">
-          <h2 id="main-title"></h2>
-          <div id="main-container"></div>
-        </div>
-      </div>
-    </div>
+      <!--Display weather here-->
+      <section class="col-10">
+        <section class="mx-2 borderc row my-2">
+          <h2>Placeholder city and <sp id="current-date"></sp></h2>
+          <ul>
+            <li>Temp: some text</li>
+            <li>Wind: some text</li>
+            <li>Humidity: some text</li>
+            <li>UV: some text</li>
+          </ul>
+          <!--5-day forcast-->
+        </section>
+        <section class="row d-flex justify-content-around">
+          <h3>5-day Forecast:</h3>
+          <div class="col-2 forecast-card" data-number="1">
+            Date
+            <ul>
+              <li>a</li>
+              <li>a</li>
+              <li>a</li>
+              <li>a</li>
+              <li>a</li>
+            </ul>
+          </div>
+          <div class="col-2 forecast-card" data-number="2">June 2</div>
+          <div class="col-2 forecast-card" data-number="3">June 3</div>
+          <div class="col-2 forecast-card" data-number="4">June 4</div>
+          <div class="col-2 forecast-card" data-number="5">June 5</div>
+          <!--5-day forcast-->
+        </section>
+      </section>
+    </main>
   </body>
-
-  <script src="assets/script.js"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"
+  ></script>
+  <script src="assets/js/script.js"></script>
 </html>
