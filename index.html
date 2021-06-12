@@ -25,8 +25,10 @@
     <main class="container-fluid row">
       <!--User Search-->
       <aside id="search-card" class="col-2 my-2">
-        <p class="fs-4">Search by city</p>
-        <input type="text" id="search-input" />
+        <p class="fs-6">Enter City</p>
+        <input type="text" id="city-search-input" />
+        <p class="fs-6">Enter State</p>
+        <input type="text" id="state-search-input" />
         <button id="searchBtn">Search</button>
         <!--Recent Searches-->
         <div id="display-recent-search"></div>
@@ -35,12 +37,17 @@
       <!--Display weather here-->
       <section class="col-10">
         <section class="mx-2 borderc row my-2">
-          <h2 id="display-city"> <sp id="current-date"></sp></h2>
-          <ul>
-            <li>Temp: some text</li>
-            <li>Wind: some text</li>
-            <li>Humidity: some text</li>
-            <li>UV: some text</li>
+          <p>
+            <sp class="fs-3" id="display-city"></sp><sp id="current-date"></sp>
+          </p>
+          <p>
+            <sp id="display-weather"></sp><sp id="current-weather-icon"></sp>
+          </p>
+          <ul class="my-0">
+            <li><sp id="current-temp"></sp></li>
+            <li><sp id="current-wind"></sp></li>
+            <li><sp id="current-humidity"></sp></li>
+            <li><sp id="current-uv"></sp></li>
           </ul>
           <!--5-day forcast-->
         </section>

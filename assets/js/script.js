@@ -1,30 +1,63 @@
-var citySearch = document.getElementById("search-input");
+var citySearch = document.getElementById("city-search-input");
+var stateSearch = document.getElementById("state-search-input");
 var searchBTN = document.getElementById("searchBtn");
 var displayCity = document.getElementById("display-city");
+var currentWeather = document.getElementById("display-weather");
+var currentTemp = document.getElementById("current-temp");
+var currentWind = document.getElementById("current-wind");
+var currentHumidity = document.getElementById("current-humidity");
+var currentUV = document.getElementById("current-uv");
+var mainIcon = document.getElementById("current-weather-icon");
 var userSearch = "";
 
 searchBTN.addEventListener("click", function () {
-  userSearch = citySearch.value.trim();
-
-  getWeather(userSearch);
-  updateHistory(userSearch);
+  userCity = citySearch.value.trim();
+  userState = stateSearch.value.trim();
+  getLocation(userCity, userState);
+  displayCity.textContent = userCity + ", " + userState;
 });
 
-function getWeather(city) {
+function getLocation(city, state) {
   var getUrl =
-    "http://api.openweathermap.org/data/2.5/forecast?q=" +
+    "http://api.openweathermap.org/geo/1.0/direct?q=" +
     city +
-    "&units=imperial&appid=11c33b04286bccb73c3817509d58931c";
+    "," +
+    state +
+    ",us&appid=11c33b04286bccb73c3817509d58931c";
   fetch(getUrl)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
-      console.log(data.city);
-      displayCity.textContent = data.city.name;
+      var lat = data[0].lat;
+      var long = data[0].lon;
+      getWeather(lat, long);
     });
 }
 
-function test(test) {
-  console.log(test);
+function getWeather(lat, long) {
+  var getUrl =
+    "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+    lat +
+    "&lon=" +
+    long +
+    "&units=imperial&appid=11c33b04286bccb73c3817509d58931c";
+
+  fetch(getUrl)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      //console.log();
+      currentWeather.textContent = data.current.weather[0].description;
+      currentTemp.textContent = "Temperature: " + data.current.temp + " F";
+      currentWind.textContent =
+        "Wind: " +
+        data.current.wind_speed +
+        "MPH, " +
+        data.current.wind_deg +
+        " degrees";
+      currentHumidity.textContent = "Humidity: " + data.current.humidity + " %";
+      currentUV.textContent = "UV Index: " + data.current.uvi;
+    });
 }
