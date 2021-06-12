@@ -25,13 +25,13 @@
     <main class="container-fluid row">
       <!--User Search-->
       <aside id="search-card" class="col-2 my-2">
-        <p class="fs-6">Enter City</p>
-        <input type="text" id="city-search-input" />
-        <p class="fs-6">Enter State</p>
-        <input type="text" id="state-search-input" />
+        <p class="fs-6">Enter City and State</p>
+        <input type="text" id="city-search-input" placeholder="Dallas, TX" />
         <button id="searchBtn">Search</button>
+        <p id="failure"></p>
+        <p id="example"></p>
         <!--Recent Searches-->
-        <div id="display-recent-search"></div>
+        <ul id="display-recent-search"></ul>
       </aside>
 
       <!--Display weather here-->
