@@ -1,10 +1,8 @@
 var citySearch = document.getElementById("city-search-input");
-var stateSearch = document.getElementById("state-search-input");
 var searchBTN = document.getElementById("searchBtn");
 var displayCity = document.getElementById("display-city");
 var displayDate = document.getElementById("current-date");
 var displayFailure = document.getElementById("failure");
-var displayExample = document.getElementById("example");
 var currentWeather = document.getElementById("display-weather");
 var currentTemp = document.getElementById("current-temp");
 var currentWind = document.getElementById("current-wind");
@@ -13,14 +11,25 @@ var currentUV = document.getElementById("current-uv");
 var mainIcon = document.getElementById("current-weather-icon");
 var currentDate = document.getElementById("current-date");
 var displayRecentSearch = document.getElementById("display-recent-search");
+var fiveDay = document.getElementById("5-day");
 var searchItems = [];
+var forecastLength = 6;
 
 currentDate.textContent = " " + moment().format("dddd, MMMM Do");
+
 searchBTN.addEventListener("click", function () {
   userCity = citySearch.value.trim();
-  getLocation(userCity);
-  updateLocalStorage(userCity);
-  renderPreviousSearch();
+  if (userCity === "") {
+    displayFailure.textContent = "Please enter a valid City and State";
+    return;
+  } else {
+    displayFailure.textContent = "";
+    getLocation(userCity);
+    updateLocalStorage(userCity);
+    renderPreviousSearch();
+  }
+
+  citySearch.innerHTML = "";
 });
 
 function getLocation(city) {
@@ -59,30 +68,54 @@ function getWeather(lat, long) {
       return response.json();
     })
     .then(function (data) {
-      //console.log();
-
-      currentWeather.textContent = data.current.weather[0].description;
-      currentTemp.textContent = "Temperature: " + data.current.temp + " F";
-      currentWind.textContent =
-        "Wind: " +
-        data.current.wind_speed +
-        "MPH, " +
-        data.current.wind_deg +
-        " degrees";
+      currentWeather.textContent = data.current.weather[0].main;
+      currentTemp.textContent = "Temp: " + data.current.temp + " F";
+      currentWind.textContent = "Wind:  " + data.current.wind_speed + "  MPH, ";
       currentHumidity.textContent = "Humidity: " + data.current.humidity + " %";
       currentUV.textContent = "UV Index: " + data.current.uvi;
+      fiveDay.innerHTML = "";
+      for (var i = 1; i < forecastLength; i++) {
+        var div = document.createElement("div");
+        div.classList.add("col-2");
+        div.classList.add("forecast-card");
+        fiveDay.appendChild(div);
+        var futureDay = document.createElement("p");
+        var weather = document.createElement("p");
+        var temperature = document.createElement("p");
+        var wind = document.createElement("p");
+        var humid = document.createElement("p");
+
+        futureDay.textContent = moment().add(i, "day").format("dddd, MMMM Do");
+        weather.textContent = data.daily[i].weather[0].main;
+        temperature.textContent = "Temp: " + data.daily[i].temp.day + " F";
+        wind.textContent = "Wind: " + data.daily[i].wind_speed + " MPH";
+        humid.textContent = "Humidity: " + data.daily[i].humidity + " %";
+        div.appendChild(futureDay);
+        div.appendChild(weather);
+        div.appendChild(temperature);
+        div.appendChild(wind);
+        div.appendChild(humid);
+      }
     });
 }
 function updateLocalStorage(search) {
   searchItems.push(search);
   localStorage.setItem("previousSearch", JSON.stringify(searchItems));
 }
+
 function renderPreviousSearch() {
   displayRecentSearch.innerHTML = "";
   for (var i = 0; i < searchItems.length; i++) {
     var searchItem = searchItems[i];
-    var previousSearch = document.createElement("li");
+    var previousSearch = document.createElement("p");
     previousSearch.textContent = searchItem;
+    previousSearch.classList.add("previous-searches");
     displayRecentSearch.append(previousSearch);
   }
 }
+document.querySelectorAll(".previous-searches").forEach((item) => {
+  item.addEventListener("click", function (event) {
+    var userSelection = event.target;
+    getLocation(userSelection);
+  });
+});

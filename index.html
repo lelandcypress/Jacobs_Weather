@@ -27,19 +27,17 @@
       <aside id="search-card" class="col-2 my-2">
         <p class="fs-6">Enter City and State</p>
         <input type="text" id="city-search-input" placeholder="Dallas, TX" />
-        <button id="searchBtn">Search</button>
+        <button id="searchBtn" class="button">Search</button>
         <p id="failure"></p>
-        <p id="example"></p>
         <!--Recent Searches-->
-        <ul id="display-recent-search"></ul>
+        <div id="display-recent-search"></div>
       </aside>
 
       <!--Display weather here-->
       <section class="col-10">
         <section class="mx-2 borderc row my-2">
-          <p>
-            <sp class="fs-3" id="display-city"></sp><sp id="current-date"></sp>
-          </p>
+          <p class="fs-3" id="display-city"></p>
+          <p id="current-date"></p>
           <p>
             <sp id="display-weather"></sp><sp id="current-weather-icon"></sp>
           </p>
@@ -51,22 +49,8 @@
           </ul>
           <!--5-day forcast-->
         </section>
-        <section class="row d-flex justify-content-around">
-          <h3>5-day Forecast:</h3>
-          <div class="col-2 forecast-card" data-number="1">
-            Date
-            <ul>
-              <li>a</li>
-              <li>a</li>
-              <li>a</li>
-              <li>a</li>
-              <li>a</li>
-            </ul>
-          </div>
-          <div class="col-2 forecast-card" data-number="2">June 2</div>
-          <div class="col-2 forecast-card" data-number="3">June 3</div>
-          <div class="col-2 forecast-card" data-number="4">June 4</div>
-          <div class="col-2 forecast-card" data-number="5">June 5</div>
+        <sp class="fs-3">5-day Forecast:</sp>
+        <section id="5-day" class="row d-flex justify-content-around">
           <!--5-day forcast-->
         </section>
       </section>
