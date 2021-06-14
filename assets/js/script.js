@@ -37,7 +37,7 @@ searchBTN.addEventListener("click", function () {
 //first fetch, will convert user input into lat and long values for ingestion into OpenWeather OneCall API//
 function getLocation(city) {
   var getUrl =
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
+    "https://api.openweathermap.org/geo/1.0/direct?q=" +
     city +
     ",,us&appid=11c33b04286bccb73c3817509d58931c";
   fetch(getUrl)
