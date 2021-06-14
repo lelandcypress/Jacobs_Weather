@@ -76,6 +76,7 @@ function getWeather(lat, long) {
     .then(function (data) {
       //Current Weather Card//
       var currentIcon = data.current.weather[0].icon;
+      //Icons//
       mainIcon.setAttribute(
         "src",
         "https://openweathermap.org/img/wn/" + currentIcon + "@2x.png"
@@ -122,6 +123,7 @@ function getWeather(lat, long) {
       }
     });
 }
+//Changes Color of UV element depending on how severe the index
 function UVColor(UVI) {
   currentUV.classList.remove("UV-High");
   currentUV.classList.remove("UV-Med");
@@ -148,7 +150,7 @@ function init() {
   }
 
   renderPreviousSearch();
-  getLocation("Charleston, SC");
+  getLocation("Dallas, TX");
 }
 
 //Pulls from Local Storage and renders search history on page with each user click//
