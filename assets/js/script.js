@@ -16,7 +16,7 @@ var searchItems = [];
 var forecastLength = 6;
 
 //displayed on current weather window
-currentDate.textContent = " " + moment().format("dddd, MMMM Do");
+currentDate.textContent = " " + moment().format("ddd MMM Do");
 
 //search button event listener
 searchBTN.addEventListener("click", function () {
@@ -75,6 +75,11 @@ function getWeather(lat, long) {
     //displays fetched data onto web app//
     .then(function (data) {
       //Current Weather Card//
+      var currentIcon = data.current.weather[0].icon;
+      mainIcon.setAttribute(
+        "src",
+        "https://openweathermap.org/img/wn/" + currentIcon + "@2x.png"
+      );
       currentWeather.textContent = data.current.weather[0].main;
       currentTemp.textContent = "Temp: " + data.current.temp + " F";
       currentWind.textContent = "Wind:  " + data.current.wind_speed + "  MPH, ";
@@ -90,18 +95,25 @@ function getWeather(lat, long) {
         div.classList.add("col-2");
         div.classList.add("forecast-card");
         fiveDay.appendChild(div);
+        var iconValue = data.daily[i].weather[0].icon;
+        var futureIcon = document.createElement("img");
         var futureDay = document.createElement("p");
         var weather = document.createElement("p");
         var temperature = document.createElement("p");
         var wind = document.createElement("p");
         var humid = document.createElement("p");
         //OpenWeather OneCall API returns DTS in unix UTC format. Used Moment.JS since it was simpler//
-        futureDay.textContent = moment().add(i, "day").format("dddd, MMMM Do");
+        futureDay.textContent = moment().add(i, "day").format("ddd MMM Do");
+        futureIcon.setAttribute(
+          "src",
+          "https://openweathermap.org/img/wn/" + iconValue + "@2x.png"
+        );
         weather.textContent = data.daily[i].weather[0].main;
         temperature.textContent = "Temp: " + data.daily[i].temp.day + " F";
         wind.textContent = "Wind: " + data.daily[i].wind_speed + " MPH";
         humid.textContent = "Humidity: " + data.daily[i].humidity + " %";
         div.appendChild(futureDay);
+        div.appendChild(futureIcon);
         div.appendChild(weather);
         div.appendChild(temperature);
         div.appendChild(wind);
@@ -111,15 +123,15 @@ function getWeather(lat, long) {
     });
 }
 function UVColor(UVI) {
-  currentUV.classList.remove(".UV-High");
-  currentUV.classList.remove(".UV-Med");
-  currentUV.classList.remove(".UV-Low");
+  currentUV.classList.remove("UV-High");
+  currentUV.classList.remove("UV-Med");
+  currentUV.classList.remove("UV-Low");
   if (UVI < 3) {
-    currentUV.classList.add(".UV-Low");
+    currentUV.classList.add("UV-Low");
   } else if (UVI > 7) {
-    currentUV.classList.add(".UV-High");
+    currentUV.classList.add("UV-High");
   } else {
-    currentUV.classList.add(".UV-Med");
+    currentUV.classList.add("UV-Med");
   }
 }
 //first step in rendering previous search cards. Pushes user search querry into empty array and sets it in Local Storage
@@ -127,6 +139,18 @@ function updateLocalStorage(search) {
   searchItems.push(search);
   localStorage.setItem("previousSearch", JSON.stringify(searchItems));
 }
+
+function init() {
+  var storedHistory = JSON.parse(localStorage.getItem("previousSearch"));
+
+  if (storedHistory !== null) {
+    searchItems = storedHistory;
+  }
+
+  renderPreviousSearch();
+  getLocation("Charleston, SC");
+}
+
 //Pulls from Local Storage and renders search history on page with each user click//
 function renderPreviousSearch() {
   displayRecentSearch.innerHTML = "";
@@ -149,4 +173,4 @@ function renderPreviousSearch() {
     });
   }
 }
-getLocation("Dallas,TX");
+init();

@@ -35,12 +35,11 @@
 
       <!--Display weather here-->
       <section class="col-10">
-        <section class="mx-2 borderc row my-2">
+        <section id="main-card" class="mx-2 borderc row my-2">
           <p class="fs-3" id="display-city"></p>
-          <p id="current-date"></p>
-          <p>
-            <sp id="display-weather"></sp><sp id="current-weather-icon"></sp>
-          </p>
+          <p class="fs-5" id="current-date"></p>
+          <p><img id="current-weather-icon" /></p>
+          <p id="display-weather"></p>
           <ul class="my-0">
             <li class="my-2"><sp id="current-temp"></sp></li>
             <li class="my-2"><sp id="current-wind"></sp></li>
@@ -49,18 +48,13 @@
           </ul>
           <!--5-day forcast-->
         </section>
-        <sp class="fs-3 borderc">5-day Forecast:</sp>
+        <sp class="fs-3 px-2">5-day Forecast</sp>
         <section id="5-day" class="row d-flex justify-content-around">
           <!--5-day forcast-->
         </section>
       </section>
     </main>
   </body>
-  <script
-    src="https://code.jquery.com/jquery-3.6.0.js"
-    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-    crossorigin="anonymous"
-  ></script>
   <script
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
