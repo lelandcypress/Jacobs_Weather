@@ -29,11 +29,10 @@ searchBTN.addEventListener("click", function () {
   } else {
     displayFailure.textContent = "";
     getLocation(userCity);
-    updateLocalStorage(userCity);
-    renderPreviousSearch();
-  }
 
-  citySearch.innerHTML = "";
+    renderPreviousSearch();
+    citySearch.value = "";
+  }
 });
 //first fetch, will convert user input into lat and long values for ingestion into OpenWeather OneCall API//
 function getLocation(city) {
@@ -43,9 +42,9 @@ function getLocation(city) {
     ",,us&appid=11c33b04286bccb73c3817509d58931c";
   fetch(getUrl)
     .then(function (response) {
-      if (response == "[]") {
+      if (response === [""]) {
         displayFailure.textContent = "Please enter a valid city, state";
-        displayExample.textContent = "ex: Dallas, TX";
+        return;
       } else {
         return response.json();
       }
@@ -57,6 +56,7 @@ function getLocation(city) {
       getWeather(lat, long);
       //First value rendered on page from Open Weather. OpenWeather OneCall API only deals with Geo Coordinates.
       displayCity.textContent = searchName;
+      updateLocalStorage(searchName);
     });
 }
 //Second Fetch Request, which will return the remaining information needed.//
