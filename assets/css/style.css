@@ -17,13 +17,6 @@ header {
   color: rgba(255, 255, 255, 0.699);
   border-radius: 8px;
 }
-.forecast-card ul {
-  margin: 0%;
-  padding-left: 0%;
-}
-.forecast-card ul li {
-  padding: 15px 0px;
-}
 
 ul {
   list-style-type: none;
@@ -48,6 +41,7 @@ input {
   background-color: #3f87a6;
   color: rgba(255, 255, 255, 0.61);
   border-radius: 8px;
+  display: flex;
 }
 #searchBtn:hover,
 .previous-searches:hover {
@@ -74,4 +68,25 @@ input {
   font-size: 18px;
   height: 7%;
   width: 100%;
+}
+.UV-High {
+  background-color: red;
+  color: white;
+  padding: 0px 12px;
+  border-radius: 8%;
+  font-size: 14px;
+}
+.UV-Med {
+  background-color: yellow;
+  color: white;
+  padding: 0px 12px;
+  border-radius: 8%;
+  font-size: 14px;
+}
+.UV-Low {
+  background-color: green;
+  color: white;
+  padding: 0px 12px;
+  border-radius: 8%;
+  font-size: 14px;
 }

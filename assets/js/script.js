@@ -15,10 +15,14 @@ var fiveDay = document.getElementById("5-day");
 var searchItems = [];
 var forecastLength = 6;
 
+//displayed on current weather window
 currentDate.textContent = " " + moment().format("dddd, MMMM Do");
 
+//search button event listener
 searchBTN.addEventListener("click", function () {
   userCity = citySearch.value.trim();
+
+  //Open Weather will pull a default US city instead of returning a 404 error. This prevents user from accessing weather of default city//
   if (userCity === "") {
     displayFailure.textContent = "Please enter a valid City and State";
     return;
@@ -31,7 +35,7 @@ searchBTN.addEventListener("click", function () {
 
   citySearch.innerHTML = "";
 });
-
+//first fetch, will convert user input into lat and long values for ingestion into OpenWeather OneCall API//
 function getLocation(city) {
   var getUrl =
     "http://api.openweathermap.org/geo/1.0/direct?q=" +
@@ -51,10 +55,11 @@ function getLocation(city) {
       var long = data[0].lon;
       var searchName = data[0].name + ", " + data[0].state;
       getWeather(lat, long);
+      //First value rendered on page from Open Weather. OpenWeather OneCall API only deals with Geo Coordinates.
       displayCity.textContent = searchName;
     });
 }
-
+//Second Fetch Request, which will return the remaining information needed.//
 function getWeather(lat, long) {
   var getUrl =
     "https://api.openweathermap.org/data/2.5/onecall?lat=" +
@@ -67,13 +72,19 @@ function getWeather(lat, long) {
     .then(function (response) {
       return response.json();
     })
+    //displays fetched data onto web app//
     .then(function (data) {
+      //Current Weather Card//
       currentWeather.textContent = data.current.weather[0].main;
       currentTemp.textContent = "Temp: " + data.current.temp + " F";
       currentWind.textContent = "Wind:  " + data.current.wind_speed + "  MPH, ";
       currentHumidity.textContent = "Humidity: " + data.current.humidity + " %";
-      currentUV.textContent = "UV Index: " + data.current.uvi;
+      currentUV.textContent = data.current.uvi;
+      var UVI = currentUV.textContent;
+      UVColor(UVI);
+      //dynamically clears and creates 5-Day Forecast Cards based on user search//
       fiveDay.innerHTML = "";
+      //set i to equal 1 since 0 will return current date.//
       for (var i = 1; i < forecastLength; i++) {
         var div = document.createElement("div");
         div.classList.add("col-2");
@@ -84,7 +95,7 @@ function getWeather(lat, long) {
         var temperature = document.createElement("p");
         var wind = document.createElement("p");
         var humid = document.createElement("p");
-
+        //OpenWeather OneCall API returns DTS in unix UTC format. Used Moment.JS since it was simpler//
         futureDay.textContent = moment().add(i, "day").format("dddd, MMMM Do");
         weather.textContent = data.daily[i].weather[0].main;
         temperature.textContent = "Temp: " + data.daily[i].temp.day + " F";
@@ -95,14 +106,28 @@ function getWeather(lat, long) {
         div.appendChild(temperature);
         div.appendChild(wind);
         div.appendChild(humid);
+        //should have used jQuerry :( //
       }
     });
 }
+function UVColor(UVI) {
+  currentUV.classList.remove(".UV-High");
+  currentUV.classList.remove(".UV-Med");
+  currentUV.classList.remove(".UV-Low");
+  if (UVI < 3) {
+    currentUV.classList.add(".UV-Low");
+  } else if (UVI > 7) {
+    currentUV.classList.add(".UV-High");
+  } else {
+    currentUV.classList.add(".UV-Med");
+  }
+}
+//first step in rendering previous search cards. Pushes user search querry into empty array and sets it in Local Storage
 function updateLocalStorage(search) {
   searchItems.push(search);
   localStorage.setItem("previousSearch", JSON.stringify(searchItems));
 }
-
+//Pulls from Local Storage and renders search history on page with each user click//
 function renderPreviousSearch() {
   displayRecentSearch.innerHTML = "";
   for (var i = 0; i < searchItems.length; i++) {
@@ -111,11 +136,17 @@ function renderPreviousSearch() {
     previousSearch.textContent = searchItem;
     previousSearch.classList.add("previous-searches");
     displayRecentSearch.append(previousSearch);
+    //adds event listeners to each element
+    previousSearch.addEventListener("click", function (event) {
+      //Prevent event bubbling
+      event.stopPropagation();
+      //User Click
+      var thisOne = event.target;
+      //Accessing inner html of the rendered list so it can be passed into a function.
+      var clickMe = thisOne.innerHTML;
+      // Turns rendered search history into active buttons
+      getLocation(clickMe);
+    });
   }
 }
-document.querySelectorAll(".previous-searches").forEach((item) => {
-  item.addEventListener("click", function (event) {
-    var userSelection = event.target;
-    getLocation(userSelection);
-  });
-});
+getLocation("Dallas,TX");
