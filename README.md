@@ -4,7 +4,7 @@
 
 This is the first iteration of a weather tracking application, developed with vanilla Javascript (with a little help from Moment.js), and Bootstrap.
 
-App URL: https://lelandcypress.github.io/Weather-App/
+App URL: https://lelandcypress.github.io/Jacobs_Weather/
 
 ### **User Experience**
 
