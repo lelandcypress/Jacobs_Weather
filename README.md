@@ -65,3 +65,6 @@ mainIcon.setAttribute(
 ```
 
 Badges provided by [Shields.io](https://shields.io/)
+
+## Contact
+If you have any questions about this project, you can reach out at [lelandcypress](https://github.com/lelandcypress), or souterm1@gmail.com
