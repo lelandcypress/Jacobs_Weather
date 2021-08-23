@@ -1,10 +1,19 @@
-# Weather-App
+# Jacob's Weather
+
+![MIT License](https://img.shields.io/badge/License-MIT-brightgreen)
 
 ### **Description**
 
 This is the first iteration of a weather tracking application, developed with vanilla Javascript (with a little help from Moment.js), and Bootstrap.
 
 App URL: https://lelandcypress.github.io/Jacobs_Weather/
+
+
+### Technology Used
+1. Plain old JavaScript
+2. HTML
+3. CSS/Bootstrap
+4. Open Weather API: https://openweathermap.org/api
 
 ### **User Experience**
 
@@ -54,3 +63,5 @@ mainIcon.setAttribute(
 "https://openweathermap.org/img/wn/" + currentIcon + "@2x.png"
 );
 ```
+
+Badges provided by [Shields.io](https://shields.io/)
