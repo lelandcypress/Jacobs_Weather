@@ -1,5 +1,5 @@
 # Jacob's Weather
-A front end application connection to two API endpoints. 
+A front end application connecting to two API endpoints. Probably one of my favorite projects to develop. 
 
 ![MIT License](https://img.shields.io/badge/License-MIT-brightgreen)
 
