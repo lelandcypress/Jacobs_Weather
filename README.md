@@ -1,4 +1,5 @@
 # Jacob's Weather
+A front end application connection to two API endpoints. 
 
 ![MIT License](https://img.shields.io/badge/License-MIT-brightgreen)
 
